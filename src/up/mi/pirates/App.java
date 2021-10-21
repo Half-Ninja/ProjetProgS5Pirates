@@ -10,7 +10,10 @@ public class App {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int choixInt = 0;
-		String choixString = "";
+		
+		//TODO initialisation de l'équipage
+		
+		//menu principal
 		do {
 			System.out.println(menuPrincipal);
 			choixInt = sc.nextInt();
@@ -21,7 +24,7 @@ public class App {
 			case 2:
 				System.out.println("choix 2");
 				break;
-			case 3:
+			case 3: // sort du système
 				System.out.println("Sortie...");
 				break;
 			default:
