@@ -5,10 +5,22 @@ import java.util.HashMap;
 
 public class Equipage {
 	// Les objets sont (pour l'instant) représenté par des int
-	
+
 	private class Relation {
 		Pirate p1, p2;
 		int cout;
+
+		/**
+		 * 
+		 * @param p1   - le premier pirate
+		 * @param p2   - le second pirate
+		 * @param cout - le cout
+		 */
+		public Relation(Pirate p1, Pirate p2, int cout) {
+			this.p1 = p1;
+			this.p2 = p2;
+			this.cout = cout;
+		}
 
 		/**
 		 * 
@@ -25,8 +37,7 @@ public class Equipage {
 		 * @return True si se sont les pirates
 		 */
 		public boolean relieTElle(Pirate p1, Pirate p2) {
-			return (this.p1.equals(p1) && this.p2.equals(p2)) || 
-					(this.p1.equals(p2) && this.p2.equals(p1));
+			return (this.p1.equals(p1) && this.p2.equals(p2)) || (this.p1.equals(p2) && this.p2.equals(p1));
 		}
 
 		public Pirate getP1() {
@@ -38,8 +49,8 @@ public class Equipage {
 		}
 	}
 
-	ArrayList<Relation> relations; // Liste d'adjacence des pirates
-	HashMap<String, Pirate> pirates; // les pirates
+	private ArrayList<Relation> relations; // Liste d'adjacence des pirates
+	private HashMap<String, Pirate> pirates; // les pirates
 
 	/**
 	 * Crée un equipage d'une certaine taille avec des certains noms
@@ -56,8 +67,52 @@ public class Equipage {
 		for (String nom : noms)
 			pirates.put(nom, new Pirate(nom, nbPirates));
 	}
-	
-	//TODO Ajout relation
-	//TODO calcul cout total
+
+	/**
+	 * 
+	 * @param p1   - le premier pirate
+	 * @param p2   - le second pirate
+	 * @param cout - le cout de la relation;
+	 */
+	public void ajoutRelation(Pirate p1, Pirate p2, int cout) {
+		relations.add(new Relation(p1, p2, cout));
+	}
+
+	/**
+	 * 
+	 * @param p1 - le premier pirate
+	 * @param p2 - le second pirate
+	 */
+	public void ajoutRelation(Pirate p1, Pirate p2) {
+		ajoutRelation(p1, p2, 1);
+	}
+
+	/**
+	 * Calcule le cout total
+	 * 
+	 * @return le cout total
+	 */
+
+	public int coutTotal() {
+		int res = 0;
+
+		for (Relation r : relations) {
+			if (r.getP1().prefere(r.getP2().getObjet()))
+				res += r.getCout();
+
+			if (r.getP2().prefere(r.getP1().getObjet()))
+				res += r.getCout();
+		}
+
+		return res;
+	}
+
+	public ArrayList<Relation> getRelations() {
+		return relations;
+	}
+
+	public HashMap<String, Pirate> getPirates() {
+		return pirates;
+	}
 
 }
