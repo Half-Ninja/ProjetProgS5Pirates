@@ -3,8 +3,9 @@ package up.mi.pirates;
 import java.util.Scanner;
 
 public class App {
-	private static String menuPrincipal = "1 - Ajouter une relation\n" + "2 - Ajouter une prÈfÈrence\n" + "3 - Fin";
-
+	private static String menuPrincipal = "1 - Ajouter une relation\n" + "2 - Ajouter une pr√©f√©rence\n" + "3 - Fin";
+	private static String menuSecondaire = "1 - √âchanger objets\n" + "2 - Afficher co√ªt\n" + "3 - Fin";
+	
 	private static void montresListePirates(Equipage eq) {
 		System.out.println("liste des pirates :");
 		for (String nom : eq.getPirates().keySet()) {
@@ -31,12 +32,12 @@ public class App {
 		eq.ajoutRelation(eq.getPirates().get(choix1), eq.getPirates().get(choix2));
 	}
 
-	private static void ajoutPrÈfÈrence(Scanner sc, Equipage eq, int nombre) {
+	private static void ajoutPr√©f√©rence(Scanner sc, Equipage eq, int nombre) {
 		String nom;
 		int[] preference = new int[nombre];
 		boolean check;
 
-		// initialise les prÈfÈrence a -1
+		// initialise les pr√©f√©rence a -1
 		for (int i = 0; i < nombre; i++)
 			preference[i] = -1;
 
@@ -44,13 +45,13 @@ public class App {
 
 		do {
 			// lire le nom
-			System.out.println("PrÈfÈrences : ");
+			System.out.println("Pr√©f√©rences : ");
 			nom = sc.next();
 
 			check = !eq.getPirates().containsKey(nom);
 
 			if (!check)
-				// lire les prÈfÈrences dans la chaine
+				// lire les pr√©f√©rences dans la chaine
 				for (int i = 0; i < nombre; i++) {
 					preference[i] = sc.nextInt();
 					if (preference[i] > nombre || preference[i] < 0) {
@@ -71,6 +72,35 @@ public class App {
 		
 		eq.getPirates().get(nom).setPreferences(preference);
 	}
+	
+	/**
+	 * pour echanger les objet de pirate
+	 * 
+	 */
+	private static void echangeObjets(Scanner sc, Equipage eq) {
+		 
+		String nom1, nom2;
+		
+		// lis le 1er nom
+		do {
+			System.out.print("Premier pirate : ");
+			nom1 = sc.next();
+		} while (!eq.getPirates().containsKey(nom1));
+
+		// lis le second nom
+		do {
+			System.out.print("Second pirate  : ");
+			nom2 = sc.next();
+		} while (!eq.getPirates().containsKey(nom2));		
+		
+		eq.echange(eq.getPirates().get(nom1),eq.getPirates().get(nom2));
+		
+		montresListePirates(eq);
+	}
+
+	
+	
+	
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -92,16 +122,44 @@ public class App {
 				ajoutRelations(sc, blackPearl);
 				break;
 			case 2:
-				System.out.println("\nAjouter une prÈfÈrence");
-				ajoutPrÈfÈrence(sc, blackPearl, NB_PIRATES);
+				System.out.println("\nAjouter une pr√©f√©rence");
+				ajoutPr√©f√©rence(sc, blackPearl, NB_PIRATES);
 				break;
-			case 3: // sort du systËme
+			case 3: // sort du syst√®me
 				System.out.println("Sortie...");
 				break;
 			default:
-				System.out.println("EntrÈe non reconnue");
+				System.out.println("Entr√©e non reconnue");
 			}
 		} while (choixInt != 3);
+		
+		montresListePirates(blackPearl);
+		
+		
+		System.out.println("\n");
+		//second menu
+		do {
+			System.out.println(menuSecondaire);
+			choixInt = sc.nextInt();
+			switch (choixInt) {
+			case 1:
+				System.out.println("\n√©changer objets");
+				echangeObjets(sc, blackPearl);
+				break;
+			case 2:
+				System.out.println("\nafficher co√ªt");
+				
+				break;
+			case 3: // sort du syst√®me
+				System.out.println("Sortie...");
+				break;
+			default:
+				System.out.println("Entr√©e non reconnue");
+			}
+		} while (choixInt != 3);
+		montresListePirates(blackPearl);
+		
+		
 		sc.close();
 	}
 
