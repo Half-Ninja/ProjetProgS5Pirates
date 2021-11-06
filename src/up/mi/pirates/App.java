@@ -111,7 +111,11 @@ public class App {
 		Scanner sc = new Scanner(System.in);
 		int choixInt = 0;
 
-		final int NB_PIRATES = 5;
+		int NB_PIRATES;
+		System.out.print("nombre de pirates : ");
+		NB_PIRATES = sc.nextInt();
+		
+		System.out.println("\n");
 
 		String[] noms = UtilPirates.genererNoms(NB_PIRATES);
 
