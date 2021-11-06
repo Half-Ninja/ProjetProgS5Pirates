@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Equipage {
-	// Les objets sont (pour l'instant) représenté par des int
+	// Les objets sont (pour l'instant) reprÃ©sentÃ© par des int
 
 	private class Relation {
 		Pirate p1, p2;
@@ -53,7 +53,7 @@ public class Equipage {
 	private HashMap<String, Pirate> pirates; // les pirates
 
 	/**
-	 * Crée un equipage d'une certaine taille avec des certains noms
+	 * CrÃ©e un equipage d'une certaine taille avec des certains noms
 	 * 
 	 * @param noms      la liste de noms
 	 * @param nbPirates le nombre de pirates
@@ -114,5 +114,19 @@ public class Equipage {
 	public HashMap<String, Pirate> getPirates() {
 		return pirates;
 	}
+	
+	/**
+	 * echange les objets entre 2 pirates
+	 * 
+	 * @param p1 - le premier pirate
+	 * @param p2 - le second pirate
+	 */
+	public void echange(Pirate p1,Pirate p2) { 
+		int tmp = p2.getObjet();
+		p2.donneLObjet(p1.getObjet());
+		p1.donneLObjet(tmp);
+	}
+	
+
 
 }
