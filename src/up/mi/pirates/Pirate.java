@@ -15,6 +15,8 @@ public class Pirate {
 	 */
 	public Pirate(String nom, int nbObjets) {
 		this.preferences = new int[nbObjets];
+		for (int i = 0 ; i < nbObjets ; i++)
+			this.preferences[i] = i;
 		this.nom = nom;
 	}
 

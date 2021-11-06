@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Equipage {
-	// Les objets sont (pour l'instant) reprÃ©sentÃ© par des int
+	// Les objets sont (pour l'instant) représenté par des int
 
 	private class Relation {
 		Pirate p1, p2;
@@ -53,7 +53,7 @@ public class Equipage {
 	private HashMap<String, Pirate> pirates; // les pirates
 
 	/**
-	 * CrÃ©e un equipage d'une certaine taille avec des certains noms
+	 * Crée un equipage d'une certaine taille avec des certains noms
 	 * 
 	 * @param noms      la liste de noms
 	 * @param nbPirates le nombre de pirates
@@ -92,7 +92,6 @@ public class Equipage {
 	 * 
 	 * @return le cout total
 	 */
-
 	public int coutTotal() {
 		int res = 0;
 
@@ -106,13 +105,30 @@ public class Equipage {
 
 		return res;
 	}
-
-	public ArrayList<Relation> getRelations() {
-		return relations;
-	}
-
-	public HashMap<String, Pirate> getPirates() {
-		return pirates;
+	
+	/**
+	 * Assigne les objets
+	 * 
+	 */
+	public void assignerObjets() {
+		boolean[] disponibiliteObjet = new boolean[pirates.size()];
+		
+		// initialise le tableau de disponibilite
+		for(int i = 0; i < disponibiliteObjet.length; i++)
+			disponibiliteObjet[i] = true;
+		
+		//assigne les objets
+		for(Pirate p : pirates.values()){
+			int i = 0;
+			//prend la preference si elle est disponible
+			while (!disponibiliteObjet[p.getPreferences(i)]) {
+				i++;
+			}
+			p.donneLObjet(p.getPreferences(i));
+			
+			//rend l'objet indisponible
+			disponibiliteObjet[p.getPreferences(i)] = false;
+		}
 	}
 	
 	/**
@@ -125,6 +141,14 @@ public class Equipage {
 		int tmp = p2.getObjet();
 		p2.donneLObjet(p1.getObjet());
 		p1.donneLObjet(tmp);
+	}
+
+	public ArrayList<Relation> getRelations() {
+		return relations;
+	}
+
+	public HashMap<String, Pirate> getPirates() {
+		return pirates;
 	}
 	
 

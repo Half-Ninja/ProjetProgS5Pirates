@@ -3,8 +3,8 @@ package up.mi.pirates;
 import java.util.Scanner;
 
 public class App {
-	private static String menuPrincipal = "1 - Ajouter une relation\n" + "2 - Ajouter une pr√©f√©rence\n" + "3 - Fin";
-	private static String menuSecondaire = "1 - √âchanger objets\n" + "2 - Afficher co√ªt\n" + "3 - Fin";
+	private static String menuPrincipal = "1 - Ajouter une relation\n" + "2 - Ajouter une prÈfÈrence\n" + "3 - Fin";
+	private static String menuSecondaire = "1 - Echanger objets\n" + "2 - Afficher co˚t\n" + "3 - Fin";
 	
 	private static void montresListePirates(Equipage eq) {
 		System.out.println("liste des pirates :");
@@ -12,6 +12,13 @@ public class App {
 			System.out.println(" - " + nom + " : " + eq.getPirates().get(nom).getPreferencesString());
 		}
 	}
+	
+	private static void montresListePiratesObjets(Equipage eq) {
+		System.out.println("liste des pirates et de leurs objets :");
+		for (String nom : eq.getPirates().keySet()) 
+			System.out.println(nom + ":o" + Integer.toString(eq.getPirates().get(nom).getObjet()));
+	}
+	
 
 	private static void ajoutRelations(Scanner sc, Equipage eq) {
 		String choix1, choix2;
@@ -32,12 +39,12 @@ public class App {
 		eq.ajoutRelation(eq.getPirates().get(choix1), eq.getPirates().get(choix2));
 	}
 
-	private static void ajoutPr√©f√©rence(Scanner sc, Equipage eq, int nombre) {
+	private static void ajoutPreference(Scanner sc, Equipage eq, int nombre) {
 		String nom;
 		int[] preference = new int[nombre];
 		boolean check;
 
-		// initialise les pr√©f√©rence a -1
+		// initialise les prÈfÈrence a -1
 		for (int i = 0; i < nombre; i++)
 			preference[i] = -1;
 
@@ -45,13 +52,13 @@ public class App {
 
 		do {
 			// lire le nom
-			System.out.println("Pr√©f√©rences : ");
+			System.out.println("PrÈfÈrences : ");
 			nom = sc.next();
 
 			check = !eq.getPirates().containsKey(nom);
 
 			if (!check)
-				// lire les pr√©f√©rences dans la chaine
+				// lire les prÈfÈrences dans la chaine
 				for (int i = 0; i < nombre; i++) {
 					preference[i] = sc.nextInt();
 					if (preference[i] > nombre || preference[i] < 0) {
@@ -95,12 +102,10 @@ public class App {
 		
 		eq.echange(eq.getPirates().get(nom1),eq.getPirates().get(nom2));
 		
-		montresListePirates(eq);
+		montresListePiratesObjets(eq);
+		System.out.println();
 	}
 
-	
-	
-	
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -122,19 +127,19 @@ public class App {
 				ajoutRelations(sc, blackPearl);
 				break;
 			case 2:
-				System.out.println("\nAjouter une pr√©f√©rence");
-				ajoutPr√©f√©rence(sc, blackPearl, NB_PIRATES);
+				System.out.println("\nAjouter une prÈfÈrence");
+				ajoutPreference(sc, blackPearl, NB_PIRATES);
 				break;
-			case 3: // sort du syst√®me
-				System.out.println("Sortie...");
+			case 3: // sort du systËme
+				System.out.println("Passage au menu suivant ... \n");
 				break;
 			default:
-				System.out.println("Entr√©e non reconnue");
+				System.out.println("EntrÈe non reconnue");
 			}
 		} while (choixInt != 3);
 		
 		montresListePirates(blackPearl);
-		
+		blackPearl.assignerObjets();
 		
 		System.out.println("\n");
 		//second menu
@@ -143,21 +148,24 @@ public class App {
 			choixInt = sc.nextInt();
 			switch (choixInt) {
 			case 1:
-				System.out.println("\n√©changer objets");
+				System.out.println("\nEchanger objets");
 				echangeObjets(sc, blackPearl);
 				break;
 			case 2:
-				System.out.println("\nafficher co√ªt");
-				
+				montresListePiratesObjets(blackPearl);
+				System.out.println("Co˚t total : " + Integer.toString(blackPearl.coutTotal()) + "\n");
 				break;
-			case 3: // sort du syst√®me
-				System.out.println("Sortie...");
+			case 3: // sort du systËme
+				System.out.println("Sortie ... ");
 				break;
 			default:
-				System.out.println("Entr√©e non reconnue");
+				System.out.println("EntrÈe non reconnue\n");
 			}
 		} while (choixInt != 3);
+		
+		
 		montresListePirates(blackPearl);
+		montresListePiratesObjets(blackPearl);
 		
 		
 		sc.close();
