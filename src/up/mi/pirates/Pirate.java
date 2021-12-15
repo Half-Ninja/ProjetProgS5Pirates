@@ -3,9 +3,9 @@ package up.mi.pirates;
 public class Pirate {
 	// Les objets sont (pour l'instant) représenté par des int
 
-	int[] preferences;
-	String nom;
-	int objet;
+	private String[] preferences;
+	private String nom;
+	private String objet;
 
 	/**
 	 * Crée un Pirate avec un nom et un certain nombre de préférence
@@ -14,12 +14,17 @@ public class Pirate {
 	 * @param nbObjets le nombre d'objets
 	 */
 	public Pirate(String nom, int nbObjets) {
-		this.preferences = new int[nbObjets];
+		this.preferences = new String[nbObjets];
 		for (int i = 0 ; i < nbObjets ; i++)
-			this.preferences[i] = i;
+			this.preferences[i] = "";
 		this.nom = nom;
 	}
 
+	/**
+	 * 
+	 * @param p Pirate avec lequel evaluer
+	 * @return True si les deux pirates sont les mêmes
+	 */
 	public boolean equals(Pirate p) {
 		return p.nom == nom;
 	}
@@ -29,7 +34,7 @@ public class Pirate {
 	 * 
 	 * @param objets l'objet a donner
 	 */
-	public void donneLObjet(int objet) {
+	public void donneLObjet(String objet) {
 		this.objet = objet;
 	}
 
@@ -38,11 +43,9 @@ public class Pirate {
 	 * 
 	 * @param objet l'objet a verifier
 	 */
-	public boolean prefere(int objet) {
-		if(objet >= preferences.length)
-			throw new ArrayIndexOutOfBoundsException("Objet " + objet + " non compris dans les préférences du pirate " + nom);
-		for (int n : preferences) {
-			if (n == objet)
+	public boolean prefere(String objet) {
+		for (String n : preferences) {
+			if (n.equals(objet))
 				return true;
 			if (n == this.objet)
 				return false;
@@ -50,31 +53,59 @@ public class Pirate {
 		return false;
 	}
 
-	public int getPreferences(int index) {
+	/**
+	 * 
+	 * @param index l'index du pirate
+	 * @return	la préférence du pirate
+	 */
+	public String getPreferences(int index) {
 		return preferences[index];
 	}
 
-	public int[] getPreferences() {
+	/**
+	 * 
+	 * @param index l'index du pirate
+	 * @return	les préférences du pirate
+	 */
+	public String[] getPreferences() {
 		return preferences;
 	}
 
+
+	/**
+	 * 
+	 * @param index l'index du pirate
+	 * @return	les préférences du pirate sous forme de String
+	 */
 	public String getPreferencesString() {
 		String res = "";
-		for(int n : preferences) {
-			res += ", " + Integer.toString(n);
+		for(String n : preferences) {
+			res += ", " + n;
 		}
-		return "[" + res.substring(1) + "]";
+		return "(" + res.substring(1) + ")";
 	}
 
+	/**
+	 * 
+	 * @return le nom du pirate
+	 */
 	public String getNom() {
 		return nom;
 	}
 
-	public int getObjet() {
+	/**
+	 * 
+	 * @return l'objet actuellement tenu par le pirate
+	 */
+	public String getObjet() {
 		return objet;
 	}
 
-	public void setPreferences(int[] preferences) {
+	/**
+	 * 
+	 * @param preferences les preferences a donner au pirate
+	 */
+	public void setPreferences(String[] preferences) {
 		this.preferences = preferences;
 	}
 

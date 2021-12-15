@@ -16,7 +16,7 @@ public class App {
 	private static void montresListePiratesObjets(Equipage eq) {
 		System.out.println("liste des pirates et de leurs objets :");
 		for (String nom : eq.getPirates().keySet()) 
-			System.out.println(nom + ":o" + Integer.toString(eq.getPirates().get(nom).getObjet()));
+			System.out.println(nom + ":" + eq.getPirates().get(nom).getObjet());
 	}
 	
 
@@ -41,12 +41,12 @@ public class App {
 
 	private static void ajoutPreference(Scanner sc, Equipage eq, int nombre) {
 		String nom;
-		int[] preference = new int[nombre];
+		String[] preference = new String[nombre];
 		boolean check;
 
 		// initialise les préférence a -1
 		for (int i = 0; i < nombre; i++)
-			preference[i] = -1;
+			preference[i] = "";
 
 		montresListePirates(eq);
 
@@ -60,16 +60,7 @@ public class App {
 			if (!check)
 				// lire les préférences dans la chaine
 				for (int i = 0; i < nombre; i++) {
-					preference[i] = sc.nextInt();
-					if (preference[i] > nombre || preference[i] < 0) {
-						check = true;
-						System.out.println("le nombre " + Integer.toString(preference[i])
-								+ " n'est pas un objet valide, veuiller recommencer");
-						if (i < nombre - 1)
-							sc.nextLine();
-						i = nombre;
-
-					}
+					preference[i] = sc.next();
 				}
 			else {
 				System.out.println("le nom \"" + nom + "\" n'est pas un pirate valide, veuiller recommencer");
