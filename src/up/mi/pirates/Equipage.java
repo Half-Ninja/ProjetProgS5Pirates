@@ -1,8 +1,15 @@
 package up.mi.pirates;
 
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class Equipage {
 
@@ -11,6 +18,7 @@ public class Equipage {
 		private int cout;
 
 		/**
+		 * constructeur de la classe Relation
 		 * 
 		 * @param p1   - le premier pirate
 		 * @param p2   - le second pirate
@@ -23,6 +31,7 @@ public class Equipage {
 		}
 
 		/**
+		 * Obtenir le cout de la relation
 		 * 
 		 * @return cout - le cout de la relation;
 		 */
@@ -31,6 +40,7 @@ public class Equipage {
 		}
 
 		/**
+		 * Obtenir les informations du 1er pirate de la relation
 		 * 
 		 * @return le 1er pirate de la relation
 		 */
@@ -39,6 +49,7 @@ public class Equipage {
 		}
 
 		/**
+		 * Obtenir les informations du 2nd pirate de la relation
 		 * 
 		 * @return le 2nd pirate de la relation
 		 */
@@ -51,17 +62,19 @@ public class Equipage {
 	 * Liste d'adjacence des pirates
 	 */
 	private ArrayList<Relation> relations;
+	
 	/**
 	 * liste des objets
 	 */
 	private ArrayList<String> objets;
+	
 	/**
 	 * HashMap des pirates selon leur noms
 	 */
 	private HashMap<String, Pirate> pirates;
 
 	/**
-	 * CrÈe un equipage d'une certaine taille avec certains noms pour les pirates
+	 * Cr√©e un equipage d'une certaine taille avec certains noms pour les pirates
 	 * 
 	 * @param noms      la liste de noms
 	 * @param nbPirates le nombre de pirates
@@ -77,12 +90,13 @@ public class Equipage {
 	}
 	
 	/**
-	 * CrÈe un equipage d'une certaine taille avec certains noms pour les pirates et les objets
+	 * Cr√©e un equipage d'une certaine taille avec certains noms pour les pirates et les objets
+	 * 
 	 * @param noms 		- les noms des pirates
 	 * @param Objets	- les noms des objets
 	 */
 	public Equipage(String[] noms, String[] objets) {
-		if(noms.length > objets.length) throw new ArrayIndexOutOfBoundsException("il y as plus de pirates que d'objet");
+		if(noms.length > objets.length) throw new ArrayIndexOutOfBoundsException("il y a plus de pirates que d'objet");
 		
 		// initialise les variables
 		this.relations = new ArrayList<>();
@@ -98,8 +112,10 @@ public class Equipage {
 			this.objets.add(objet);
 	}
 
+	
 	/**
-	 * ajoute une relation avec un cout donnÈ
+	 * ajoute une relation avec un cout donn√©
+	 * 
 	 * @param p1   - le premier pirate
 	 * @param p2   - le second pirate
 	 * @param cout - le cout de la relation
@@ -110,6 +126,7 @@ public class Equipage {
 
 	/**
 	 * ajoute une relation
+	 * 
 	 * @param p1 - le premier pirate
 	 * @param p2 - le second pirate
 	 */
@@ -137,7 +154,7 @@ public class Equipage {
 	}
 	
 	/**
-	 * Assigne les objets avec un algorythme naÔf
+	 * Assigne les objets avec un algorithme na√Øf
 	 * 
 	 */
 	public void assignerObjets() {
@@ -163,7 +180,7 @@ public class Equipage {
 	}
 	
 	/**
-	 * echange les objets entre 2 pirates
+	 * Echanger les objets entre 2 pirates
 	 * 
 	 * @param p1 - le premier pirate
 	 * @param p2 - le second pirate
@@ -175,6 +192,7 @@ public class Equipage {
 	}
 
 	/**
+	 * Obtenir les relations
 	 * 
 	 * @return un ArrrayList des relations
 	 */
@@ -183,6 +201,7 @@ public class Equipage {
 	}
 
 	/**
+	 * Obtenir les pirates
 	 * 
 	 * @return une HashMap des Pirates
 	 */
@@ -191,15 +210,65 @@ public class Equipage {
 	}
 
 	/**
-	 * retourne le pirate avec le nom donnÈ en parametre
-	 * @param nom 	- le nom recherchÈ
-	 * @return		le pirate avec le nom
+	 * cherche le pirate avec le nom donn√© en parametre
+	 * 
+	 * @param nom 	- le nom recherch√©
+	 * @return		le pirate avec le nom donn√© en parametre
 	 * @throws NoSuchElementException s'il n'existe aucun pirate avec se nom
 	 */
 	public Pirate getPirateParNom(String nom) throws NoSuchElementException{
-		if(!pirates.containsKey(nom)) throw new NoSuchElementException("Il n'existe aucun pirate nommÈ " + nom);
+		if(!pirates.containsKey(nom)) throw new NoSuchElementException("Il n'existe aucun pirate nomm√© " + nom);
 		return pirates.get(nom);
 	}
+	
+	
+	
+	public void sauvegardeFichier() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Veuillez indiquer le nom du fichier :");
+		String source = sc.next();
+		File file = new File(source);
+		sc.close();
+		
+		sc.close();
+		//Si le fichier n'existe pas
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			//liste qui retourne les pirates avec l'objet obtenu
+			List<String> res=new ArrayList<String>();
+			
+			for(Pirate pirate:pirates.values()) {
+				res.add(pirate.getObjet());
+			}
+			
+			try {
+				FileWriter writer= new FileWriter(file);
+				
+				BufferedWriter bw= new BufferedWriter(writer);
+				for(int i=0;i<res.size();i++) {
+					
+	                writer.append(res.get(i)+"\n");
+	                bw.newLine();
+				}
+				bw.close();
+				writer.close();
+				
+			}catch(IOException e) {
+				e.printStackTrace();//affiche l'erreur dans la console
+			}
+		
+		}
+			
+			
+			
+	}
+
+	
 	
 
 
