@@ -223,6 +223,10 @@ public class Equipage {
 	
 	
 	
+	/**
+	 *  le programme demande à l’utilisateur le nom 
+	 *  d’un fichier, et y enregistre la solution actuelle
+	 */
 	public void sauvegardeFichier() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Veuillez indiquer le nom du fichier :");
