@@ -67,7 +67,7 @@ public class Equipage {
 	private HashMap<String, Pirate> pirates;
 
 	/**
-	 * CrÃ©e un equipage d'une certaine taille avec certains noms pour les pirates
+	 * Crée un equipage d'une certaine taille avec certains noms pour les pirates
 	 * 
 	 * @param noms      la liste de noms
 	 * @param nbPirates le nombre de pirates
@@ -83,7 +83,7 @@ public class Equipage {
 	}
 
 	/**
-	 * CrÃ©e un equipage d'une certaine taille avec certains noms pour les pirates
+	 * Crée un equipage d'une certaine taille avec certains noms pour les pirates
 	 * et les objets
 	 * 
 	 * @param noms   - les noms des pirates
@@ -108,7 +108,7 @@ public class Equipage {
 	}
 
 	/**
-	 * ajoute une relation avec un cout donnÃ©
+	 * ajoute une relation avec un cout donné
 	 * 
 	 * @param p1   - le premier pirate
 	 * @param p2   - le second pirate
@@ -152,7 +152,7 @@ public class Equipage {
 	}
 
 	/**
-	 * Assigne les objets avec un algorithme naÃ¯f
+	 * Assigne les objets avec un algorithme naif
 	 * 
 	 */
 	public void assignerObjets() {
@@ -207,10 +207,10 @@ public class Equipage {
 	}
 
 	/**
-	 * cherche le pirate avec le nom donnÃ© en parametre
+	 * cherche le pirate avec le nom donné en parametre
 	 * 
-	 * @param nom - le nom recherchÃ©
-	 * @return le pirate avec le nom donnÃ© en parametre
+	 * @param nom - le nom recherché
+	 * @return le pirate avec le nom donné en parametre
 	 * @throws NoSuchElementException s'il n'existe aucun pirate avec se nom
 	 */
 	public Pirate getPirateParNom(String nom) throws NoSuchElementException {
