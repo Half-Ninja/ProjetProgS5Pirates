@@ -6,8 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-import up.mi.pirates.Equipage.Relation;
-
 import java.util.ArrayList;
 
 public class UtilPirates {

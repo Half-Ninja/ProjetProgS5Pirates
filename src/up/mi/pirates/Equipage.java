@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 public class Equipage {
 
-	public class Relation {
+	private class Relation {
 		private Pirate p1, p2;
 		private int cout;
 
