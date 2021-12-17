@@ -36,7 +36,7 @@ public class UtilPirates {
 	 * Genere un Objet Equipage en fonction d'un fichier
 	 * 
 	 * @param fin - le fichier
-	 * @return l'equipage généré
+	 * @return l'equipage gÃ©nÃ©rÃ©
 	 * @throws FileNotFoundException
 	 */
 	public static Equipage genererDepuisFichier(File fin) throws FileNotFoundException {
@@ -76,7 +76,7 @@ public class UtilPirates {
 			}
 		}
 
-		// crée l'equipage
+		// crÃ©e l'equipage
 		res = new Equipage(nomsPirates.toArray(new String[0]), nomsObjets.toArray(new String[0]));
 
 		// ajoute les relation
@@ -127,6 +127,15 @@ public class UtilPirates {
 		return res.toArray(new String[0]);
 	}
 
+	
+	
+	
+	/**
+	 * Solution naive pour assigner les objets
+	 * 
+	 * @param eq	un equipage
+	 * @param k	nombre d'iteration de l'algorithme
+	 */
 	public static void resolutionNaive(Equipage eq, int k) {
 
 		eq.assignerObjets();
