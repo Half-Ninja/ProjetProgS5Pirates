@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 public class Equipage {
 
-	private class Relation {
+	public class Relation {
 		private Pirate p1, p2;
 		private int cout;
 
@@ -67,7 +67,7 @@ public class Equipage {
 	private HashMap<String, Pirate> pirates;
 
 	/**
-	 * Crée un equipage d'une certaine taille avec certains noms pour les pirates
+	 * CrÃ©e un equipage d'une certaine taille avec certains noms pour les pirates
 	 * 
 	 * @param noms      la liste de noms
 	 * @param nbPirates le nombre de pirates
@@ -83,7 +83,7 @@ public class Equipage {
 	}
 
 	/**
-	 * Crée un equipage d'une certaine taille avec certains noms pour les pirates
+	 * CrÃ©e un equipage d'une certaine taille avec certains noms pour les pirates
 	 * et les objets
 	 * 
 	 * @param noms   - les noms des pirates
@@ -108,7 +108,7 @@ public class Equipage {
 	}
 
 	/**
-	 * ajoute une relation avec un cout donné
+	 * ajoute une relation avec un cout donnÃ©
 	 * 
 	 * @param p1   - le premier pirate
 	 * @param p2   - le second pirate
@@ -131,7 +131,7 @@ public class Equipage {
 	/**
 	 * Calcule le cout total
 	 * 
-	 * @return le cout total, -1 si le cout ne peut pas etre calcul� (pirate sans
+	 * @return le cout total, -1 si le cout ne peut pas etre calculé (pirate sans
 	 *         objet)
 	 */
 	public int coutTotal() {
@@ -152,7 +152,7 @@ public class Equipage {
 	}
 
 	/**
-	 * Assigne les objets avec un algorithme naïf
+	 * Assigne les objets avec un algorithme naÃ¯f
 	 * 
 	 */
 	public void assignerObjets() {
@@ -207,21 +207,21 @@ public class Equipage {
 	}
 
 	/**
-	 * cherche le pirate avec le nom donné en parametre
+	 * cherche le pirate avec le nom donnÃ© en parametre
 	 * 
-	 * @param nom - le nom recherché
-	 * @return le pirate avec le nom donné en parametre
+	 * @param nom - le nom recherchÃ©
+	 * @return le pirate avec le nom donnÃ© en parametre
 	 * @throws NoSuchElementException s'il n'existe aucun pirate avec se nom
 	 */
 	public Pirate getPirateParNom(String nom) throws NoSuchElementException {
 		if (!pirates.containsKey(nom))
-			throw new NoSuchElementException("Il n'existe aucun pirate nommé " + nom);
+			throw new NoSuchElementException("Il n'existe aucun pirate nommÃ© " + nom);
 		return pirates.get(nom);
 	}
 
 	/**
 	 * 
-	 * @return true si une solution est propos�e (tout les pirates ont des objets)
+	 * @return true si une solution est proposée (tout les pirates ont des objets)
 	 */
 	public boolean isResolu() {
 		for (Pirate p : pirates.values())
