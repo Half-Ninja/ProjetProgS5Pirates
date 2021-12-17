@@ -85,7 +85,12 @@ public class AppPart2 {
 				// menu
 				do {
 					System.out.println(menuFichier);
-					choixInt = sc.nextInt();
+					try {
+						choixInt = sc.nextInt();
+					}catch(InputMismatchException e) {
+						choixInt = 0;
+						sc.next();
+					}
 					
 					switch (choixInt) {
 					case 1: // Resolution automatique
