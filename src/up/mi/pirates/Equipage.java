@@ -1,19 +1,12 @@
 package up.mi.pirates;
 
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class Equipage {
 
-	private class Relation {
+	public class Relation {
 		private Pirate p1, p2;
 		private int cout;
 
@@ -33,7 +26,7 @@ public class Equipage {
 		/**
 		 * Obtenir le cout de la relation
 		 * 
-		 * @return cout - le cout de la relation;
+		 * @return le cout de la relation;
 		 */
 		public int getCout() {
 			return cout;
@@ -62,12 +55,12 @@ public class Equipage {
 	 * Liste d'adjacence des pirates
 	 */
 	private ArrayList<Relation> relations;
-	
+
 	/**
 	 * liste des objets
 	 */
 	private ArrayList<String> objets;
-	
+
 	/**
 	 * HashMap des pirates selon leur noms
 	 */
@@ -88,16 +81,18 @@ public class Equipage {
 		for (String nom : noms)
 			pirates.put(nom, new Pirate(nom, nbPirates));
 	}
-	
+
 	/**
-	 * Crée un equipage d'une certaine taille avec certains noms pour les pirates et les objets
+	 * Crée un equipage d'une certaine taille avec certains noms pour les pirates
+	 * et les objets
 	 * 
-	 * @param noms 		- les noms des pirates
-	 * @param Objets	- les noms des objets
+	 * @param noms   - les noms des pirates
+	 * @param Objets - les noms des objets
 	 */
 	public Equipage(String[] noms, String[] objets) {
-		if(noms.length > objets.length) throw new ArrayIndexOutOfBoundsException("il y a plus de pirates que d'objet");
-		
+		if (noms.length > objets.length)
+			throw new ArrayIndexOutOfBoundsException("il y a plus de pirates que d'objet");
+
 		// initialise les variables
 		this.relations = new ArrayList<>();
 		this.pirates = new HashMap<>();
@@ -112,7 +107,6 @@ public class Equipage {
 			this.objets.add(objet);
 	}
 
-	
 	/**
 	 * ajoute une relation avec un cout donné
 	 * 
@@ -137,55 +131,58 @@ public class Equipage {
 	/**
 	 * Calcule le cout total
 	 * 
-	 * @return le cout total
+	 * @return le cout total, -1 si le cout ne peut pas etre calcul� (pirate sans
+	 *         objet)
 	 */
 	public int coutTotal() {
 		int res = 0;
+		try {
+			for (Relation r : relations) {
+				if (r.getP1().prefere(r.getP2().getObjet()))
+					res += r.getCout();
 
-		for (Relation r : relations) {
-			if (r.getP1().prefere(r.getP2().getObjet()))
-				res += r.getCout();
-
-			if (r.getP2().prefere(r.getP1().getObjet()))
-				res += r.getCout();
+				if (r.getP2().prefere(r.getP1().getObjet()))
+					res += r.getCout();
+			}
+			return res;
+		} catch (NullPointerException e) {
+			return -1;
 		}
 
-		return res;
 	}
-	
+
 	/**
 	 * Assigne les objets avec un algorithme naïf
 	 * 
 	 */
 	public void assignerObjets() {
 		boolean[] disponibiliteObjet = new boolean[pirates.size()];
-		
+
 		// initialise le tableau de disponibilite
-		for(int i = 0; i < disponibiliteObjet.length; i++)
+		for (int i = 0; i < disponibiliteObjet.length; i++)
 			disponibiliteObjet[i] = true;
-		
-		//assigne les objets
-		for(Pirate p : pirates.values()){
+
+		// assigne les objets
+		for (Pirate p : pirates.values()) {
 			int i = 0;
-			//prend la preference si elle est disponible
+			// prend la preference si elle est disponible
 			while (!disponibiliteObjet[objets.indexOf(p.getPreferences(i))]) {
 				i++;
 			}
 			p.donneLObjet(p.getPreferences(i));
-			
-			//rend l'objet indisponible
-			
+
+			// rend l'objet indisponible
 			disponibiliteObjet[objets.indexOf(p.getPreferences(i))] = false;
 		}
 	}
-	
+
 	/**
 	 * Echanger les objets entre 2 pirates
 	 * 
 	 * @param p1 - le premier pirate
 	 * @param p2 - le second pirate
 	 */
-	public void echange(Pirate p1,Pirate p2) { 
+	public void echange(Pirate p1, Pirate p2) {
 		String tmp = p2.getObjet();
 		p2.donneLObjet(p1.getObjet());
 		p1.donneLObjet(tmp);
@@ -212,68 +209,25 @@ public class Equipage {
 	/**
 	 * cherche le pirate avec le nom donné en parametre
 	 * 
-	 * @param nom 	- le nom recherché
-	 * @return		le pirate avec le nom donné en parametre
+	 * @param nom - le nom recherché
+	 * @return le pirate avec le nom donné en parametre
 	 * @throws NoSuchElementException s'il n'existe aucun pirate avec se nom
 	 */
-	public Pirate getPirateParNom(String nom) throws NoSuchElementException{
-		if(!pirates.containsKey(nom)) throw new NoSuchElementException("Il n'existe aucun pirate nommé " + nom);
+	public Pirate getPirateParNom(String nom) throws NoSuchElementException {
+		if (!pirates.containsKey(nom))
+			throw new NoSuchElementException("Il n'existe aucun pirate nommé " + nom);
 		return pirates.get(nom);
 	}
-	
-	
-	
+
 	/**
-	 *  le programme demande à l’utilisateur le nom 
-	 *  d’un fichier, et y enregistre la solution actuelle
+	 * 
+	 * @return true si une solution est propos�e (tout les pirates ont des objets)
 	 */
-	public void sauvegardeFichier() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Veuillez indiquer le nom du fichier :");
-		String source = sc.next();
-		File file = new File(source);
-		sc.close();
-		
-		sc.close();
-		//Si le fichier n'existe pas
-		if (!file.exists()) {
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}else{
-			//liste qui retourne les pirates avec l'objet obtenu
-			List<String> res=new ArrayList<String>();
-			
-			for(Pirate pirate:pirates.values()) {
-				res.add(pirate.getObjet());
-			}
-			
-			try {
-				FileWriter writer= new FileWriter(file);
-				
-				BufferedWriter bw= new BufferedWriter(writer);
-				for(int i=0;i<res.size();i++) {
-					
-	                writer.append(res.get(i)+"\n");
-	                bw.newLine();
-				}
-				bw.close();
-				writer.close();
-				
-			}catch(IOException e) {
-				e.printStackTrace();//affiche l'erreur dans la console
-			}
-		
-		}
-			
-			
-			
+	public boolean isResolu() {
+		for (Pirate p : pirates.values())
+			if (!p.hasObjet())
+				return false;
+		return true;
 	}
-
-	
-	
-
 
 }

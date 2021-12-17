@@ -18,6 +18,7 @@ public class Pirate {
 		for (int i = 0 ; i < nbObjets ; i++)
 			this.preferences[i] = "";
 		this.nom = nom;
+		this.objet = null;
 	}
 
 	/**
@@ -99,6 +100,14 @@ public class Pirate {
 	 */
 	public String getObjet() {
 		return objet;
+	}
+
+	/**
+	 * 
+	 * @return true si le pirate possede un objet
+	 */
+	public boolean hasObjet() {
+		return objet != null;
 	}
 
 	/**
